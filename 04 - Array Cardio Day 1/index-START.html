@@ -27,33 +27,75 @@
       { first: 'Hanna', last: 'Hammarström', year: 1829, passed: 1909 }
     ];
 
-    const people = ['Beck, Glenn', 'Becker, Carl', 'Beckett, Samuel', 'Beddoes, Mick', 'Beecher, Henry', 'Beethoven, Ludwig', 'Begin, Menachem', 'Belloc, Hilaire', 'Bellow, Saul', 'Benchley, Robert', 'Benenson, Peter', 'Ben-Gurion, David', 'Benjamin, Walter', 'Benn, Tony', 'Bennington, Chester', 'Benson, Leana', 'Bent, Silas', 'Bentsen, Lloyd', 'Berger, Ric', 'Bergman, Ingmar', 'Berio, Luciano', 'Berle, Milton', 'Berlin, Irving', 'Berne, Eric', 'Bernhard, Sandra', 'Berra, Yogi', 'Berry, Halle', 'Berry, Wendell', 'Bethea, Erin', 'Bevan, Aneurin', 'Bevel, Ken', 'Biden, Joseph', 'Bierce, Ambrose', 'Biko, Steve', 'Billings, Josh', 'Biondo, Frank', 'Birrell, Augustine', 'Black, Elk', 'Blair, Robert', 'Blair, Tony', 'Blake, William'];
+    const people = ['Beck, Glenn', 'Becker, Carl', 'Beckett, Samuel',
+                    'Beddoes, Mick', 'Beecher, Henry', 'Beethoven, Ludwig',
+                    'Begin, Menachem', 'Belloc, Hilaire', 'Bellow, Saul',
+                    'Benchley, Robert', 'Benenson, Peter', 'Ben-Gurion, David',
+                    'Benjamin, Walter', 'Benn, Tony', 'Bennington, Chester',
+                    'Benson, Leana', 'Bent, Silas', 'Bentsen, Lloyd',
+                    'Berger, Ric', 'Bergman, Ingmar', 'Berio, Luciano',
+                    'Berle, Milton', 'Berlin, Irving', 'Berne, Eric',
+                    'Bernhard, Sandra', 'Berra, Yogi', 'Berry, Halle',
+                    'Berry, Wendell', 'Bethea, Erin', 'Bevan, Aneurin',
+                    'Bevel, Ken', 'Biden, Joseph', 'Bierce, Ambrose',
+                    'Biko, Steve', 'Billings, Josh', 'Biondo, Frank',
+                    'Birrell, Augustine', 'Black, Elk', 'Blair, Robert',
+                    'Blair, Tony', 'Blake, William'];
 
     // Array.prototype.filter()
     // 1. Filter the list of inventors for those who were born in the 1500's
+    const inventors1500 = inventors.filter(i => i.year < 1600 && i.year >= 1500);
+    console.table(inventors1500);
 
     // Array.prototype.map()
     // 2. Give us an array of the inventors' first and last names
+    const nameArr = inventors.map(i => `${i.first} ${i.last}`);
+    console.log(JSON.stringify(nameArr, null, 2));
 
     // Array.prototype.sort()
     // 3. Sort the inventors by birthdate, oldest to youngest
+    const oldToYoung = inventors.sort((prev,curr) => prev.year > curr.year ? 1 : -1);
+
+    console.table(oldToYoung);
 
     // Array.prototype.reduce()
     // 4. How many years did all the inventors live?
+    const totalYears = inventors.reduce((sum, i) => sum + (i.passed - i.year), 0);
+    console.log(totalYears);
 
     // 5. Sort the inventors by years lived
+    const sortByAge = inventors.sort((prev, curr) => {
+      const prevAge = prev.passed - prev.year;
+      const currAge = curr.passed - curr.year;
+      return prevAge < currAge ? 1 : -1;
+    }).map(i => {i['age'] = i.passed - i.year; return i;});
+
+    console.table(sortByAge);
 
     // 6. create a list of Boulevards in Paris that contain 'de' anywhere in the name
     // https://en.wikipedia.org/wiki/Category:Boulevards_in_Paris
 
+    // const category = document.querySelector('.mw-category');
+    // const links = Array.from(category.querySelectorAll('a'));
+    //
+    // const de = links.map(l => link.textContent)
+    //                 .filter(l => l.includes(' de '));
 
     // 7. sort Exercise
     // Sort the people alphabetically by last name
+    const alpha = people.map(p => p.split(','))
+                        .sort((prev, curr) => prev[0] > curr[0] ? 1 : -1)
+                        .map(lF => lF.join(','));
+    console.log(alpha);
 
     // 8. Reduce Exercise
     // Sum up the instances of each of these
     const data = ['car', 'car', 'truck', 'truck', 'bike', 'walk', 'car', 'van', 'bike', 'walk', 'car', 'van', 'car', 'truck' ];
-
+    const counts = data.reduce((o, i) => {
+      o[i] = o[i] + 1 || 1;
+      return o;
+    }, {})
+    console.log(JSON.stringify(counts, null, 2));
   </script>
 </body>
 </html>
