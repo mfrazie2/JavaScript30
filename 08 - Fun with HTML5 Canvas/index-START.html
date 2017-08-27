@@ -7,6 +7,92 @@
 <body>
 <canvas id="draw" width="800" height="800"></canvas>
 <script>
+
+  // grab canvas
+  const canvas = document.getElementById('draw');
+  // get context from canvas
+  const context = canvas.getContext('2d');
+
+  // set height/width to innerH/W
+  canvas.height = window.innerHeight;
+  canvas.width = window.innerWidth;
+  // set strokeStyle, lineJoin, lineCap
+  context.strokeStyle = '#000';
+  context.lineJoin = 'round';
+  context.lineCap = 'round';
+  context.globalCompositeOperation = 'exclusion';
+
+  // flag for drawing (boolean)
+  let isDrawing = false;
+  // previous values of x,y coords
+  let prevX = 0;
+  let prevY = 0;
+  let hue = 0;
+  let lineWidth = 5;
+  let hueDirection = false;
+  let widthDirection = false;
+  // function takes an event param
+    // beginPath of context
+    // 
+
+  const draw = (event) => {
+    // console.log(event);
+    if (!isDrawing) return;
+    context.strokeStyle = `hsl(${hue}, 100%, 50%)`;
+    context.lineWidth = lineWidth;
+    context.beginPath();
+    context.moveTo(prevX, prevY);
+    context.lineTo(event.offsetX, event.offsetY);
+    context.stroke();
+
+    updatePrevXY(event);
+    updateHueValue();
+    updateWidthValue();
+  };
+
+  const setIsDrawingFlag = (state) => {
+    isDrawing = state;
+  };
+
+  const updatePrevXY = (e) => {
+    [prevX, prevY] = [e.offsetX, e.offsetY];
+  };
+
+  const updateWidthValue = () => {
+    if (lineWidth > 100) {
+      widthDirection = false;
+    } else if (lineWidth < 5) {
+      widthDirection = true;
+    }
+
+    if (widthDirection) {
+      lineWidth++;
+    } else {
+      lineWidth--;
+    }
+  };
+
+  const updateHueValue = () => {
+    if (hue > 359) {
+      hueDirection = false;
+    } else if (hue < 1) {
+      hueDirection = true;
+    }
+
+    if (hueDirection) {
+      hue++;
+    } else {
+      hue--;
+    }
+  };
+
+  document.addEventListener('mousemove', draw);
+  document.addEventListener('mousedown', (e) => {
+    setIsDrawingFlag(true)
+    updatePrevXY(e);
+  });
+  document.addEventListener('mouseup', () => setIsDrawingFlag(false));
+  document.addEventListener('mouseout', () => setIsDrawingFlag(false));
 </script>
 
 <style>
