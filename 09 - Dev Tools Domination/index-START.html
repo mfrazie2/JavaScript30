@@ -18,28 +18,79 @@
     }
 
     // Regular
+    console.log('hello');
 
     // Interpolated
+    const myVar = 'string';
+    console.log('Hello I am a %s string!', 'stuff'); // second argument would need to match %s for string, etc
+    console.log(`Hello I am a ${myVar}`);
 
     // Styled
+    console.log('%c I am a string', 'font-size: 15px; background: red;')
 
     // warning!
+    console.warn('Head up!');
 
     // Error :|
+    console.error('Oh shit!')
 
     // Info
+    console.info('This is information!');
 
     // Testing
+    console.assert(1 == 1, 'This is wrong');
+    console.assert(1 == 2, 'This is wrong');
 
     // clearing
+    // console.clear();
 
     // Viewing DOM Elements
+    console.log(document.getElementsByTagName('p')[0]);
+    console.dir(document.getElementsByTagName('p')[0]);
 
     // Grouping together
+    dogs.forEach(dog => {
+      console.log(`This is ${dog.name}.`);
+      console.log(`${dog.name} is ${dog.age} human-years old.`);
+      console.log(`${dog.name} is ${dog.age * 7} dog-years old.`);
+    });
+
+    dogs.forEach(dog => {
+      console.group(dog.name)
+      console.log(`This is ${dog.name}.`);
+      console.log(`${dog.name} is ${dog.age} human-years old.`);
+      console.log(`${dog.name} is ${dog.age * 7} dog-years old.`);
+      console.groupEnd(dog.name);
+    });
+    
+    dogs.forEach(dog => {
+      console.groupCollapsed(dog.name)
+      console.log(`This is ${dog.name}.`);
+      console.log(`${dog.name} is ${dog.age} human-years old.`);
+      console.log(`${dog.name} is ${dog.age * 7} dog-years old.`);
+      console.groupEnd(dog.name);
+    });
 
     // counting
+    console.count('Mike');
+    console.count('Mike');
+    console.count('Mike');
+    console.count('Fraz');
+    console.count('Mike');
+    console.count('Mike');
+    console.count('Fraz');
+    console.count('Fraz');
+    console.count('Fraz');
+    console.count('Mike');
 
     // timing
+    console.time('starting timer');
+    setTimeout(() => {
+      console.timeEnd('starting timer');
+    }, 2000);
+
+    // table
+    console.table(dogs);
 
   </script>
 </body>
